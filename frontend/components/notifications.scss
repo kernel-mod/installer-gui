@@ -1,0 +1,29 @@
+.notifications {
+    position: fixed;
+    top: 40px;
+    right: 20px;
+
+    .notification {
+        transition: opacity .4s;
+        display: flex;
+        justify-content: space-between;
+        min-width: 170px;
+        background: rgba(#505050, 0.6);
+        padding: 10px;
+        align-items: center;
+        border-radius: 8px;
+        cursor: default;
+        max-width: 200px;
+        opacity: 1;
+
+        &.closing {
+            opacity: 0;
+        }
+
+        .close-button {
+            cursor: pointer;
+        }
+    }
+}
+
+

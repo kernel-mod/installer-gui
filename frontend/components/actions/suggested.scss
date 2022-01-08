@@ -1,0 +1,42 @@
+
+.application {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background: rgba(#727272, 0.1);
+    padding: 10px;
+
+    .app-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    .app-container {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .app-name {
+            font-weight: 500;
+        }
+        
+        .app-path {
+            color: #8f8f8f;
+            font-size: 14px;
+        }
+    }
+
+    .app-add {
+        margin-left: auto;
+    }
+
+    & + .application {
+        margin-top: 10px;
+    }
+
+    &.disabled {
+        opacity: .7;
+        pointer-events: none;
+    }
+}

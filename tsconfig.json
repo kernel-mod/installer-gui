@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "downlevelIteration": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "experimentalDecorators": true,
+        "paths": {
+            "@common/*": ["common/*"],
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.installing {
+    display: flex;
+    flex-direction: column;
+
+    .scroller {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: calc(100vh - 100px);
+
+        &::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background: #ddd;
+        }
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+        margin: 10px 0 10px auto;
+
+        button + button {
+            margin-left: 5px;
+        }
+    }
+}

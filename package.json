@@ -1,0 +1,85 @@
+{
+  "name": "kernel-installer",
+  "version": "1.0.0",
+  "description": "A GUI installer for kernel-mod.",
+  "main": "./dist/core.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-core": "rollup -c --type=core",
+    "build-frontend": "rollup -c --type=frontend",
+    "dist": "pnpm run build-core && pnpm run build-frontend && electron-builder -p never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kernel-mod/installer-gui.git"
+  },
+  "keywords": [
+    "installer",
+    "kernel",
+    "gui"
+  ],
+  "author": "Strencher, Kyza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kernel-mod/installer-gui/issues"
+  },
+  "homepage": "https://github.com/kernel-mod/installer-gui#readme",
+  "dependencies": {
+    "preact": "^10.6.4"
+  },
+  "devDependencies": {
+    "electron-builder": "^22.14.5",
+    "electron": "^16.0.5",
+    "@rollup/plugin-alias": "^3.1.8",
+    "@rollup/plugin-html": "^0.2.4",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@swc/core": "^1.2.122",
+    "rollup": "^2.62.0",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-swc": "^0.2.0",
+    "sass": "^1.45.1"
+  },
+  "build": {
+    "appId": "app.kernel-mod.installer",
+    "productName": "Kernel",
+    "files": [
+      "dist/*"
+    ],
+    "win": {
+      "artifactName": "${productName}-Windows.${ext}",
+      "icon": "assets/kernel.ico",
+      "target": {
+        "target": "portable",
+        "arch": [
+          "ia32"
+        ]
+      }
+    },
+    "portable": {
+      "requestExecutionLevel": "user",
+      "useZip": true
+    },
+    "mac": {
+      "artifactName": "${productName}-Mac.${ext}",
+      "icon": "assets/kernel.ico",
+      "category": "public.app-category.social-networking",
+      "target": {
+        "target": "zip",
+        "arch": [
+          "x64"
+        ]
+      }
+    },
+    "linux": {
+      "artifactName": "${productName}-Linux.${ext}",
+      "category": "Utility",
+      "target": {
+        "target": "AppImage",
+        "arch": [
+          "x64"
+        ]
+      }
+    }
+  }
+}

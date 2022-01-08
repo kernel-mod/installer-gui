@@ -1,0 +1,36 @@
+.category {
+    $color: #727272;
+    border-radius: 4px;
+    padding: 15px 10px;
+    background: rgba($color, 0.1);
+    transition: background .2s;
+    display: flex;
+    cursor: default;
+    align-items: center;
+    box-sizing: border-box;
+
+    & + .category {
+        margin-top: 10px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .note {
+        font-size: 14px;
+    }
+
+    .icon-wrapper {
+        padding-top: 3px;
+        margin-right: 10px;
+    }
+
+    .caret {
+        margin-left: auto;
+    }
+
+    &:hover {
+        background: rgba($color, 0.2);
+    }
+}

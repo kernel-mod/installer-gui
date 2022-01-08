@@ -1,0 +1,45 @@
+.switch-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(#727272, 0.1);
+    border-radius: 4px;
+
+    .content {
+        display: flex;
+        align-items: center;
+        
+        .label {
+            margin-right: 5px;
+            font-size: 14px;
+        }
+    }
+    
+    .switch {
+        width: 42px;
+        background: var(--background);
+        padding: 4px;
+        border-radius: 10px;
+        
+
+        .tick {
+            width: 14px;
+            height: 14px;
+            border-radius: 100px;
+            transition: transform .2s ease-in-out;
+            background: #ddd;
+    
+            &.disabled {
+                transform: translateX(0);
+            }
+    
+            &.enabled {
+                transform: translateX(20px);
+            }
+        }
+    }
+
+    & + .switch-item {
+        margin-top: 10px;
+    }
+}

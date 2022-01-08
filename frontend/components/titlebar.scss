@@ -1,0 +1,41 @@
+.titlebar {
+    -webkit-app-region: drag;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+        padding-left: 10px;
+        display: flex;
+        align-items: center;
+        cursor: default;
+
+        .app-title {
+            cursor: pointer;
+        }
+
+        .caret {
+            color: #8f8f8f;
+        }
+    }
+
+    .title, .buttons {
+        -webkit-app-region: no-drag;
+    }
+
+    .buttons {
+        display: flex;
+
+        .button {
+            padding: 10px 15px;
+            transition: background .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            &:hover {
+                background: rgba(#eee, 0.2);
+            }
+        }
+    }
+}

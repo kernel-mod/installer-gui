@@ -1,0 +1,39 @@
+.file-picker {
+    padding: 15px 0;
+    padding-bottom: 0;
+    background: rgba(#727272, 0.1);
+    border-radius: 4px;
+
+    .header {
+        padding: 0 10px;
+        padding-bottom: 15px;
+        display: flex;
+        align-items: center;
+
+        .browse-file {
+            margin-left: auto;
+        }
+    }
+
+    .file {
+        padding-top: 10px;
+        padding: 10px;
+        border-top: 1px solid rgba(#000, 0.25);
+        display: flex;
+        color: #8f8f8f;
+        align-items: center;
+        font-size: 14px;
+        justify-content: space-between;
+
+        .filename {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .expandButton {
+        margin-left: 5px;
+        padding: 3.3px !important;
+    }
+}

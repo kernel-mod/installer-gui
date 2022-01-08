@@ -1,0 +1,80 @@
+:root {
+    color-scheme: dark;
+    --base-border: #141414;
+    --text-normal: #d1d5da;
+    --text-muted: #959da5;
+    --text-focus: #ffffff;
+    --text-opacity: 255, 255, 255;
+    --background-light: #2f363d;
+    --background-gradient-light: #3a424b;
+    --background: #24292e;
+    --background-alt: #2a3036;
+    --background-dark: #1d2125;
+    --background-modifier-hover: var(--background-light);
+    --background-modifier-active: #444d56;
+    --accent-color: #0366d6;
+}
+
+*, *::before, *::after {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--background);
+    color: var(--text-normal);
+}
+
+body {
+    margin: 0;
+    color: #ddd;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    .app {
+        padding: 10px;
+
+        .form {
+            .form-title {
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            & + .form {
+                margin-top: 20px;
+            }
+        }
+
+        button {
+            background: rgba(#727272, 0.2);
+            border-radius: 4px;
+            padding: 8px 16px;
+            color: #ddd;
+            border: none;
+            transition: background .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.inline {
+                padding: 5px;
+                background: transparent;
+            }
+
+            &:hover:not([disabled]) {
+                background: rgba(#727272, 0.3);
+            }
+
+            &[disabled] {
+                opacity: .6;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+}
+
+.margin-bottom10 {
+    margin-bottom: 10px;
+}
