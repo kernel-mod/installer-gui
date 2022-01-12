@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-core": "rollup -c --type=core",
     "build-frontend": "rollup -c --type=frontend",
-    "dist": "pnpm run build-core && pnpm run build-frontend && electron-builder -p never"
+    "dist": "pnpm run build-core && pnpm run build-frontend && electron-builder"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,10 @@
     "appId": "app.kernel-mod.installer",
     "productName": "Kernel",
     "files": [
-      "dist/*"
+      "dist/style.css",
+      "dist/core.js",
+      "dist/frontend.js",
+      "dist/index.html"
     ],
     "win": {
       "artifactName": "${productName}-Windows.${ext}",

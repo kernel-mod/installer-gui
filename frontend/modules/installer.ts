@@ -2,6 +2,10 @@ import {promises as fs, createWriteStream} from "original-fs";
 import path from "path";
 import https from "https";
 
+const headers = {
+    "User-Agent": "Kernel-Mod GUI Installer (https://github.com/kernel-mod)"
+};
+
 export type LogFn = (message: string) => void;
 
 export type AppType = "ASAR" | "DEFAULT" | "UNKNOWN";
@@ -82,7 +86,20 @@ export default class Installer {
                 throw error;
             }
             
-            const res = await new Promise<any>(resolve => https.get(kernelAsar.url, resolve));
+            const res = await new Promise<any>(resolve => {
+                const fetchUrl = function (url: string) {
+                    https.get(url, {headers}, res => {
+                        // Make it follow redirects
+                        if (res.statusCode === 301 || res.statusCode === 302) {
+                            return fetchUrl(res.headers.location);
+                        }
+
+                        resolve(res);
+                    });
+                };
+
+                fetchUrl(kernelAsar.browser_download_url);
+            });
             res.pipe(createWriteStream(asarPath));
             await new Promise((resolve, reject) => {
                 res.on("error", reject);

@@ -22,7 +22,7 @@ export default args => {
                 output: path.resolve(root, "dist", "style.css"),
                 runtime: require("sass")
             }),
-            serve({
+            (args.w ?? args.watch) && serve({
                 contentBase: ["dist", "public"],
                 port: 5670
             }),
@@ -58,6 +58,6 @@ export default args => {
                     }
                 }
             })
-        ]
+        ].filter(Boolean)
     });
 }
