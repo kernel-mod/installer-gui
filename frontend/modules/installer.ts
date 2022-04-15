@@ -10,11 +10,80 @@ export type LogFn = (message: string) => void;
 
 export type AppType = "ASAR" | "DEFAULT" | "UNKNOWN";
 
+export type GithubResponse = {
+    url: string;
+    assets_url: string;
+    upload_url: string;
+    html_url: string;
+    id: number;
+    author: {
+        login: string;
+        id: number;
+        node_id: string;
+        avatar_url: string;
+        gravatar_id: string;
+        url: string;
+        html_url: string;
+        followers_url: string;
+        following_url: string;
+        gists_url: string;
+        starred_url: string;
+        subscriptions_url: string;
+        organizations_url: string;
+        repos_url: string;
+        events_url: string;
+        received_events_url: string;
+        type: string;
+    };
+    node_id: string;
+    tag_name: string;
+    target_commitish: string;
+    name: string;
+    created_at: string;
+    published_at: string;
+    assets: {
+        url: string;
+        id: number;
+        node_id: string;
+        name: string;
+        label: string;
+        uploader: {
+            login: string;
+            id: number;
+            node_id: string;
+            avatar_url: string;
+            gravatar_id: string;
+            url: string;
+            html_url: string;
+            followers_url: string;
+            following_url: string;
+            gists_url: string;
+            starred_url: string;
+            subscriptions_url: string;
+            organizations_url: string;
+            repos_url: string;
+            events_url: string;
+            received_events_url: string;
+            type: string;
+        };
+        content_type: string;
+        state: string;
+        size: number;
+        download_count: number;
+        created_at: string;
+        updated_at: string;
+        browser_download_url: string;
+    }[];
+    tarball_url: string;
+    zipball_url: string;
+    body: string;
+};
+
 const files = [
     {
         name: "index.js",
         content() {
-            return `const path=require("path");require(path.join(require(path.join(__dirname,"package.json")).location,"kernel.asar"));`;
+            return `const path=require("path");require(path.join(require(path.join(__dirname,"package.json")).location,"kernel.asar"))?.default?.({startOriginal: true});`;
         }
     },
     {
@@ -76,7 +145,7 @@ export default class Installer {
 
     static async downloadKernelASAR(onLog: LogFn, asarPath: string) {
         try {
-            const releases = await fetch("https://api.github.com/repos/kernel-mod/electron/releases/latest").then(res => res.json());
+            const releases = await fetch("https://api.github.com/repos/kernel-mod/electron/releases/latest", {headers}).then(res => res.json() as unknown as GithubResponse);
             if (!releases) throw "Releases is void!";
             const kernelAsar = releases.assets.find(e => e.name === "kernel.asar");
             if (!kernelAsar) throw "Release file not found.";
@@ -88,7 +157,12 @@ export default class Installer {
             
             const res = await new Promise<any>(resolve => {
                 const fetchUrl = function (url: string) {
-                    https.get(url, {headers}, res => {
+                    https.get(url, {
+                        headers: {
+                            ...headers,
+                            "Accept": kernelAsar.content_type
+                        }
+                    }, res => {
                         // Make it follow redirects
                         if (res.statusCode === 301 || res.statusCode === 302) {
                             return fetchUrl(res.headers.location);
@@ -98,7 +172,7 @@ export default class Installer {
                     });
                 };
 
-                fetchUrl(kernelAsar.browser_download_url);
+                fetchUrl(kernelAsar.url);
             });
             res.pipe(createWriteStream(asarPath));
             await new Promise((resolve, reject) => {

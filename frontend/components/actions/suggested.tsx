@@ -14,7 +14,7 @@ const ProgramData = process.env.ProgramData ?? path.join("C:", "ProgramData");
 
 const makeDiscordPath = (type: "canary" | "stable" | "ptb" | "development") => ({
     id: type === "stable" ? "Discord" : `Discord${capitalize(type)}`,
-    name: `Discord${type === "stable" ? "" : capitalize(type)}`,
+    name: `Discord ${type === "stable" ? "" : type === "ptb" ? "PTB" : capitalize(type)}`,
     get icon() {
         if (this._icon) return this._icon;
         let location = path.resolve(AppData, this.id, "app.ico");
@@ -33,6 +33,8 @@ const makeDiscordPath = (type: "canary" | "stable" | "ptb" | "development") => (
         const appFolder = fs.readdirSync(location, "utf8")
             .filter(e => e.startsWith("app-") && validateDirectory(path.resolve(location, e)))
             .sort((a, b) => extractVersion(b) - extractVersion(a))[0];
+        
+        if (!appFolder) return null;
         
         return this._path = path.resolve(location, appFolder);
     }
