@@ -83,7 +83,17 @@ const files = [
     {
         name: "index.js",
         content() {
-            return `const path=require("path");require(path.join(require(path.join(__dirname,"package.json")).location,"kernel.asar"))?.default?.({startOriginal: true});`;
+            return `const pkg = require("./package.json");
+const Module = require("module");
+const path = require("path");
+
+try {
+  const kernel = require(path.join(pkg.location, "kernel.asar"));
+  if (kernel?.default) kernel.default({ startOriginal: true });
+} catch(e) {
+  console.error("Kernel failed to load: ", e.message);
+  Module._load(path.join(__dirname, "..", "app-original.asar"), null, true);
+}`;
         }
     },
     {
