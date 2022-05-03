@@ -90,7 +90,6 @@ const files = [
         name: "package.json",
         content({kernelPath}) {
             return JSON.stringify({
-                name: "kernel",
                 main: "index.js",
                 location: kernelPath
             }, null, 4);
@@ -100,23 +99,18 @@ const files = [
 
 export default class Installer {
     static async hasAccess(path: string): Promise<[boolean, Error]> {
-        try {
-            await fs.access(path);
-        } catch (error) {
-            return [false, error];
-        } finally {
-            return [true, null];
-        }
+        return fs.access(path).then(
+            () => [true, null],
+            error => [false, error]
+        );
     }
 
     static async exists(path: string): Promise<boolean> {
-        try {
-            await fs.access(path);
-            return true;   
-        } catch {
-            return false;
-        }
-    } 
+        return fs.access(path).then(
+            () => true,
+            () => false
+        );
+    }
 
     static async getAppType(appPath: string): Promise<AppType> {
         const hasAppAsar = await this.exists(path.resolve(appPath, "resources", "app.asar"));
@@ -174,18 +168,20 @@ export default class Installer {
 
                 fetchUrl(kernelAsar.url);
             });
+
             res.pipe(createWriteStream(asarPath));
             await new Promise((resolve, reject) => {
                 res.on("error", reject);
                 res.on("end", resolve);
             });
+
+            return false;
         } catch (error) {
             onLog(`❌ Failed to download kernel.asar file.`);
             console.error(error);
+
             return true;
-        } finally {
-            return false;
-        }
+        } 
     }
 
     static async install(applications: string[], {kernelPath, downloadASAR, makePackagesFolder}, onLog: LogFn): Promise<void> {
