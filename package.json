@@ -1,6 +1,6 @@
 {
   "name": "kernel-installer",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "A GUI installer for kernel-mod.",
   "main": "./dist/core.js",
   "scripts": {
