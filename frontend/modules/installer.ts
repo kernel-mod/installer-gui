@@ -153,11 +153,6 @@ export default class Installer {
             if (!releases) throw "Releases is void!";
             const kernelAsar = releases.assets.find(e => e.name === "kernel.asar");
             if (!kernelAsar) throw "Release file not found.";
-            const [hasAccess, error] = await this.hasAccess(asarPath);
-            if (!hasAccess) {
-                onLog(`❌ No write permissions for ${asarPath}`);
-                throw error;
-            }
             
             const res = await new Promise<any>(resolve => {
                 const fetchUrl = function (url: string) {
@@ -243,7 +238,6 @@ export default class Installer {
         if (makePackagesFolder) {
             try {
                 const folder = path.resolve(kernelPath, "packages");
-                console.log({folder, p: await this.exists(folder)});
                 const packagesFolderExists = await this.exists(folder);
                 if (packagesFolderExists) {
                     onLog(`⚠️ Packages folder already exists!`);
